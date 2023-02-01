@@ -1,6 +1,6 @@
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
-root.render(<App />);
+root.render(React.createElement(App, null));
 
 function App() {
   const firstRef = React.useRef(null);
@@ -39,8 +39,8 @@ function App() {
 
   function controlFocusPrevElem(n) {
     for (let i = n - 1; i >= 0; i--) {
-      if (!inputs[i - 1]?.disabled) {
-        inputs[i - 1]?.focus();
+      if (inputs[i - 1] && !inputs[i - 1].disabled) {
+        inputs[i - 1] && inputs[i - 1].focus();
         break;
       }
     }
@@ -48,8 +48,8 @@ function App() {
 
   function controlFocusNextElem(n) {
     for (let i = n; i < inputs.length; i++) {
-      if (!inputs[i]?.disabled) {
-        inputs[i]?.focus();
+      if (inputs[i] && !inputs[i].disabled) {
+        inputs[i] && inputs[i].focus();
         break;
       }
     }
@@ -150,71 +150,67 @@ function App() {
       firstRef.current.disabled = true;
     }
   }
-  return (
-    <section>
-      <form className='form'>
-        <input
-          ref={firstRef}
-          className={
-            !first && firstCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          value={first}
-          name='first'
-          maxLength='1'
-          onChange={(e) => setFirst(e.target.value.replace(/\D/, ''))}
-        />
-        <input
-          ref={secondRef}
-          className={
-            !second && secondCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          maxLength='1'
-          value={second}
-          onChange={(e) => setSecond(e.target.value.replace(/\D/, ''))}
-        />
-        <input
-          ref={thirdRef}
-          className={
-            !third && thirdCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          maxLength='1'
-          value={third}
-          onChange={(e) => setThird(e.target.value.replace(/\D/, ''))}
-        />
-        <input
-          ref={fourthRef}
-          className={
-            !fourth && fourthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          maxLength='1'
-          value={fourth}
-          onChange={(e) => setFourth(e.target.value.replace(/\D/, ''))}
-        />
-        <input
-          ref={fifthRef}
-          className={
-            !fifth && fifthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          maxLength='1'
-          value={fifth}
-          onChange={(e) => setFifth(e.target.value.replace(/\D/, ''))}
-        />
-        <input
-          ref={sixthRef}
-          className={
-            !sixth && sixthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
-          type='text'
-          value={sixth}
-          maxLength='1'
-          onChange={(e) => setSixth(e.target.value.replace(/\D/, ''))}
-        />
-      </form>
-    </section>
+  return React.createElement(
+    'section',
+    null,
+    React.createElement(
+      'form',
+      { className: 'form' },
+      React.createElement('input', {
+        ref: firstRef,
+        className:
+          !first && firstCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        value: first,
+        name: 'first',
+        maxLength: '1',
+        onChange: (e) => setFirst(e.target.value.replace(/\D/, '')),
+      }),
+      React.createElement('input', {
+        ref: secondRef,
+        className:
+          !second && secondCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        maxLength: '1',
+        value: second,
+        onChange: (e) => setSecond(e.target.value.replace(/\D/, '')),
+      }),
+      React.createElement('input', {
+        ref: thirdRef,
+        className:
+          !third && thirdCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        maxLength: '1',
+        value: third,
+        onChange: (e) => setThird(e.target.value.replace(/\D/, '')),
+      }),
+      React.createElement('input', {
+        ref: fourthRef,
+        className:
+          !fourth && fourthCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        maxLength: '1',
+        value: fourth,
+        onChange: (e) => setFourth(e.target.value.replace(/\D/, '')),
+      }),
+      React.createElement('input', {
+        ref: fifthRef,
+        className:
+          !fifth && fifthCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        maxLength: '1',
+        value: fifth,
+        onChange: (e) => setFifth(e.target.value.replace(/\D/, '')),
+      }),
+      React.createElement('input', {
+        ref: sixthRef,
+        className:
+          !sixth && sixthCondition === 'invalid' ? 'input invalid' : 'input',
+        type: 'text',
+        value: sixth,
+        maxLength: '1',
+        onChange: (e) => setSixth(e.target.value.replace(/\D/, '')),
+      }),
+    ),
   );
 }
