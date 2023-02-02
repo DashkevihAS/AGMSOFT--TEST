@@ -37,15 +37,6 @@ function App() {
     sixthRef.current,
   ];
 
-  function controlFocusPrevElem(n) {
-    for (let i = n - 1; i >= 0; i--) {
-      if (!inputs[i - 1]?.disabled) {
-        inputs[i - 1]?.focus();
-        break;
-      }
-    }
-  }
-
   function controlFocusNextElem(n) {
     for (let i = n; i < inputs.length; i++) {
       if (!inputs[i]?.disabled) {
@@ -56,6 +47,19 @@ function App() {
   }
 
   React.useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace') {
+        for (let i = inputs.length; i >= 0; i--) {
+          if (inputs[i - 1]?.value && !inputs[i - 1]?.disabled) {
+            inputs[i - 1]?.focus();
+            break;
+          }
+        }
+      }
+    });
+  });
+
+  React.useEffect(() => {
     !sixth && fifthRef.current.focus();
   }, [sixth]);
 
@@ -64,7 +68,6 @@ function App() {
       controlFocusNextElem(5);
     } else {
       fifthRef.current.focus();
-      controlFocusPrevElem(5);
     }
   }, [fifth]);
 
@@ -73,7 +76,6 @@ function App() {
       controlFocusNextElem(4);
     } else {
       fourthRef.current.focus();
-      controlFocusPrevElem(4);
     }
   }, [fourth]);
 
@@ -82,7 +84,6 @@ function App() {
       controlFocusNextElem(3);
     } else {
       thirdRef.current.focus();
-      controlFocusPrevElem(3);
     }
   }, [third]);
 
@@ -91,7 +92,6 @@ function App() {
       controlFocusNextElem(2);
     } else {
       secondRef.current.focus();
-      controlFocusPrevElem(2);
     }
   }, [second]);
 
@@ -107,68 +107,67 @@ function App() {
     firstRef.current.focus();
   }, []);
 
-  if (first && second && third && fourth && fifth && sixth) {
-    if (sixth !== '6') {
-      setSixth('');
-      setSixthCondition('invalid');
-    } else {
-      sixthRef.current.disabled = true;
-    }
+  React.useEffect(() => {
+    if (first && second && third && fourth && fifth && sixth) {
+      if (sixth !== '6') {
+        setSixth('');
+        setSixthCondition('invalid');
+      } else {
+        sixthRef.current.disabled = true;
+      }
 
-    if (fifth !== '5') {
-      setFifth('');
-      setFifthCondition('invalid');
-    } else {
-      fifthRef.current.disabled = true;
-    }
+      if (fifth !== '5') {
+        setFifth('');
+        setFifthCondition('invalid');
+      } else {
+        fifthRef.current.disabled = true;
+      }
 
-    if (fourth !== '4') {
-      setFourth('');
-      setFourthCondition('invalid');
-    } else {
-      fourthRef.current.disabled = true;
-    }
+      if (fourth !== '4') {
+        setFourth('');
+        setFourthCondition('invalid');
+      } else {
+        fourthRef.current.disabled = true;
+      }
 
-    if (third !== '3') {
-      setThird('');
-      setThirdCondition('invalid');
-    } else {
-      thirdRef.current.disabled = true;
-    }
+      if (third !== '3') {
+        setThird('');
+        setThirdCondition('invalid');
+      } else {
+        thirdRef.current.disabled = true;
+      }
 
-    if (second !== '2') {
-      setSecond('');
-      setSecondCondition('invalid');
-    } else {
-      secondRef.current.disabled = true;
-    }
+      if (second !== '2') {
+        setSecond('');
+        setSecondCondition('invalid');
+      } else {
+        secondRef.current.disabled = true;
+      }
 
-    if (first !== '1') {
-      setFirst('');
-      setFirstCondition('invalid');
-    } else {
-      firstRef.current.disabled = true;
+      if (first !== '1') {
+        setFirst('');
+        setFirstCondition('invalid');
+      } else {
+        firstRef.current.disabled = true;
+      }
     }
-  }
+  }, [first, second, third, fourth, fifth, sixth]);
+
+  console.log(fifthCondition);
   return (
     <section>
       <form className='form'>
         <input
           ref={firstRef}
-          className={
-            !first && firstCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={firstCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           value={first}
-          name='first'
           maxLength='1'
           onChange={(e) => setFirst(e.target.value.replace(/\D/, ''))}
         />
         <input
           ref={secondRef}
-          className={
-            !second && secondCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={secondCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           maxLength='1'
           value={second}
@@ -176,9 +175,7 @@ function App() {
         />
         <input
           ref={thirdRef}
-          className={
-            !third && thirdCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={thirdCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           maxLength='1'
           value={third}
@@ -186,9 +183,7 @@ function App() {
         />
         <input
           ref={fourthRef}
-          className={
-            !fourth && fourthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={fourthCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           maxLength='1'
           value={fourth}
@@ -196,9 +191,7 @@ function App() {
         />
         <input
           ref={fifthRef}
-          className={
-            !fifth && fifthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={fifthCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           maxLength='1'
           value={fifth}
@@ -206,9 +199,7 @@ function App() {
         />
         <input
           ref={sixthRef}
-          className={
-            !sixth && sixthCondition === 'invalid' ? 'input invalid' : 'input'
-          }
+          className={sixthCondition === 'invalid' ? 'input invalid' : 'input'}
           type='text'
           value={sixth}
           maxLength='1'
