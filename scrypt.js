@@ -46,17 +46,22 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace') {
-        for (let i = inputs.length; i >= 0; i--) {
-          if (inputs[i - 1]?.value && !inputs[i - 1]?.disabled) {
-            inputs[i - 1]?.focus();
-            break;
-          }
+  const handleBackSpace = (e) => {
+    if (e.key === 'Backspace') {
+      for (let i = inputs.length; i >= 0; i--) {
+        if (inputs[i - 1]?.value && !inputs[i - 1]?.disabled) {
+          inputs[i - 1]?.focus();
+          break;
         }
       }
-    });
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', handleBackSpace);
+    return () => {
+      document.removeEventListener('keydown', handleBackSpace);
+    };
   });
 
   React.useEffect(() => {
@@ -153,7 +158,6 @@ function App() {
     }
   }, [first, second, third, fourth, fifth, sixth]);
 
-  console.log(fifthCondition);
   return (
     <section>
       <form className='form'>
