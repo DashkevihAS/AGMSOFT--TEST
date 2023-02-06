@@ -10,9 +10,6 @@ function App() {
   const fifthRef = React.useRef(null);
   const sixthRef = React.useRef(null);
 
-  const [value, setValue] = React.useState(['', '', '', '', '', '']);
-  const [condition, setCondition] = React.useState(['', '', '', '', '', '']);
-
   const inputsRef = [
     firstRef,
     secondRef,
@@ -21,6 +18,9 @@ function App() {
     fifthRef,
     sixthRef,
   ];
+
+  const [value, setValue] = React.useState(['', '', '', '', '', '']);
+  const [condition, setCondition] = React.useState(['', '', '', '', '', '']);
 
   // если следующий инпут не заблокирован, то фокус на него,
   //иначе проверяем следующий
@@ -35,7 +35,6 @@ function App() {
 
   // при нажатии Backspace, если предыдущий элемент не заблокирован,
   // то фокус на него, иначе проверяем следующий
-
   const handleBackSpace = (e) => {
     if (e.key === 'Backspace') {
       for (let i = inputsRef.length; i > 0; i--) {
@@ -91,10 +90,6 @@ function App() {
   React.useEffect(() => {
     setFocus(1);
   }, [value[0]]);
-
-  React.useEffect(() => {
-    firstRef.current.focus();
-  }, []);
 
   // валидация при заполнении всех инпутов
   React.useEffect(() => {
